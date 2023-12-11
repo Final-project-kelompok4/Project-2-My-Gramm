@@ -105,7 +105,8 @@ class UserController {
 
             const [numOfUpdatedRows, [updatedUser]] = await User.update(updateData, {
                 where: {
-                    id: userData.id
+                    id: id,
+                    email: userData.email
                 },
                 returning: true
             });

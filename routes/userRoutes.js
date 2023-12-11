@@ -6,8 +6,8 @@ const CommentController = require("../controller/commentController")
 const SosmedController = require("../controller/sosmedController")
 const { authenticateToken } = require("../middleware/auth")
 
-router.post("/register", UserController.registerUser)
-router.post("/login", UserController.login)
+router.post("/users/register", UserController.registerUser)
+router.post("/users/login", UserController.login)
 router.put("/users/:id", authenticateToken, UserController.updateUser)
 router.delete("/users/:id", authenticateToken, UserController.deleteUser)
 
@@ -22,9 +22,9 @@ router.get("/comments", authenticateToken, CommentController.getOwnComments)
 router.put("/comments/:id", authenticateToken, CommentController.updateComment)
 router.delete("/comments/:id", authenticateToken, CommentController.deleteComment)
 
-router.post("/sosmeds", authenticateToken, SosmedController.addSosmed)
-router.get("/sosmeds", authenticateToken, SosmedController.getOwnSosmed)
-router.put("/sosmeds/:id", authenticateToken, SosmedController.updateSosmed)
-router.delete("/sosmeds/:id", authenticateToken, SosmedController.deleteSosmed)
+router.post("/socialmedias", authenticateToken, SosmedController.addSosmed)
+router.get("/socialmedias", authenticateToken, SosmedController.getOwnSosmed)
+router.put("/socialmedias/:id", authenticateToken, SosmedController.updateSosmed)
+router.delete("/socialmedias/:id", authenticateToken, SosmedController.deleteSosmed)
 
 module.exports = router 
