@@ -32,7 +32,7 @@ const authenticateToken = async(req, res, next) => {
 
         if(!userData || !userData.id) {
             throw {
-                code : 401,
+                code : 404,
                 message: "User tidak ditemukan"
             }
         }

@@ -9,9 +9,6 @@ class UserController {
             
             const { full_name, email, username, password, profile_image_url, age, phone_number } = req.body
 
-            // Hash password
-            // const hashedPassword = await bcrypt.hash(password, 10);
-
             const newUser = await User.create({
                 email,
                 full_name,
@@ -76,7 +73,7 @@ class UserController {
             res.status(200).json({ message: 'Login successful', token });
 
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            res.status( error.code || 500).json(error.message)
         }
     }
 
