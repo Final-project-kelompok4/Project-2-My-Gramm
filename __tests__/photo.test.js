@@ -27,16 +27,16 @@ const {
     }
 
     beforeAll(async () => {
-        await User.create(testData);
+        await User.create(testData)
         
         const loginResponse = await request(app)
             .post('/users/login')
             .send({
                 email: testData.email,
                 password: testData.password,
-        });
+        })
         
-        authToken = loginResponse.body.token;
+        authToken = loginResponse.body.token
 
         const photo = await Photo.create({
             title: 'Sample Title',
@@ -45,7 +45,7 @@ const {
             UserId: testData.id,
         });
         
-        createdPhotoId = photo.id;
+        createdPhotoId = photo.id
     });
     
     let authToken
@@ -62,9 +62,9 @@ describe('POST /photos', () => {
             poster_img_url: 'https://example.com/sample.jpg',
         });
 
-        expect(response.status).toBe(201);
-        expect(response.body).toHaveProperty('id');
-        expect(response.body).toHaveProperty('title', 'Sample Title');
+        expect(response.status).toBe(201)
+        expect(response.body).toHaveProperty('id')
+        expect(response.body).toHaveProperty('title', 'Sample Title')
         expect(response.body).toHaveProperty('caption', 'Sample Caption')
         expect(response.body).toHaveProperty('poster_img_url', 'https://example.com/sample.jpg')
 
@@ -96,9 +96,9 @@ describe('POST /photos', () => {
                 title: 'Sample Title',
                 caption: 'Sample Caption',
                 poster_img_url: 'https://example.com/sample.jpg',
-            });
+            })
 
-        expect(response.status).toBe(401);
+        expect(response.status).toBe(401)
         expect(response.body).toEqual('Token tidak valid')
         expect(typeof response.body).toBe('string')
         expect(response.body).not.toBe('')
@@ -118,19 +118,19 @@ describe('GET /photos', () => {
         expect(response.body).toHaveProperty('photos')
         expect(response.body.photos).toBeInstanceOf(Array)
 
-        const firstPhoto = response.body.photos[0];
-        expect(firstPhoto).toHaveProperty('id');
-        expect(firstPhoto).toHaveProperty('title');
-        expect(firstPhoto).toHaveProperty('caption');
-        expect(firstPhoto).toHaveProperty('poster_img_url');
-        expect(firstPhoto).toHaveProperty('UserId');
+        const firstPhoto = response.body.photos[0]
+        expect(firstPhoto).toHaveProperty('id')
+        expect(firstPhoto).toHaveProperty('title')
+        expect(firstPhoto).toHaveProperty('caption')
+        expect(firstPhoto).toHaveProperty('poster_img_url')
+        expect(firstPhoto).toHaveProperty('UserId')
     })
 
     it('should be response 401 for error no token is provided', async () => {
         const response = await request(app)
-            .get('/photos');
+            .get('/photos')
     
-        expect(response.status).toBe(401);
+        expect(response.status).toBe(401)
         expect(response.body).toEqual('token tidak disediakan')
         expect(typeof response.body).toBe('string')
         expect(response.body).not.toBe('')
@@ -153,8 +153,8 @@ describe('PUT /photos/photoId', () => {
 
         expect(response.status).toBe(200)
         expect(response.body).toHaveProperty('id', createdPhotoId)
-        expect(response.body).toHaveProperty('title', 'Updated Title');
-        expect(response.body).toHaveProperty('caption', 'Updated Caption');
+        expect(response.body).toHaveProperty('title', 'Updated Title')
+        expect(response.body).toHaveProperty('caption', 'Updated Caption')
         expect(response.body).toHaveProperty('poster_img_url', 'https://example.com/updated.jpg')
     })
 
@@ -198,7 +198,7 @@ describe('PUT /photos/photoId', () => {
             .send({
                 email: unauthorizedUser.email,
                 password: unauthorizedUser.password,
-        });
+        })
 
         const response = await request(app)
             .put(`/photos/${createdPhotoId}`)
@@ -234,7 +234,7 @@ describe('DELETE /photos/photoId', () => {
         const response = await request(app)
             .delete(`/photos/${createdPhotoId}`)
 
-        expect(response.status).toBe(401);
+        expect(response.status).toBe(401)
         expect(response.body).toEqual('token tidak disediakan')
         expect(typeof response.body).toBe('string')
         expect(response.body).not.toBe('')
