@@ -132,7 +132,7 @@ class CommentController {
                 },
             };
 
-            res.status(201).json(response);
+            res.status(200).json(response);
         } catch (error) {
             console.error(error);
             res.status(error.code || 500).json(error.message);
